@@ -7,10 +7,9 @@ const axios = require('axios')
 class LargeGroupContainer extends Component {
 
   componentDidMount() {
-    axios.get('/largegroup')
+    axios.get('/api/largegroup')
       .then(function(response){
-        console.log(response)
-        console.log('this is the axios.get call!')
+        console.log('users', response)
       })
   }
 

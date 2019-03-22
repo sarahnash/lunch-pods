@@ -1,11 +1,13 @@
-var express = require('express')
-var app = express()
+const express = require('express')
+const app = express()
+const db = require('./models/index')
+const port = process.env.PORT || 8000
 
 // app.use(express.static(_dirname + '/src'))
 
-app.get('/largegroup', function(req, res, nextFn){
-  console.log('the app sent me an HTTP request to route GET /largegroup');
-  res.send('this will be who is in the groups!')
+app.get('/api/largegroup', function(req, res, nextFn){
+  console.log(res.data)
+  res.send()
 })
 
 app.post('/rsvpyes', function(req, res, nextFn){
@@ -28,6 +30,15 @@ app.get('/smallgroups', function(req, res, nextFn){
   res.send('here are the small groups!')
 })
 
-app.listen(8000, function(){
-  console.log('the server is listening!')
+const server = app.listen(port, () => {
+  if(app.get('env') === 'test') return
+  console.log('Express app started on port ' + port)
+})
+
+server.on('close', () => {
+  console.log('closed express server')
+
+  db.pool.end(() => {
+    console.log('shut down connection pool')
+  })
 })
