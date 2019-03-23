@@ -5,11 +5,20 @@
 /.pnp
 .pnp.js
 
+# ignore the build JS file
+public/js/app.js
+
 # testing
 /coverage
 
 # production
 /build
+
+# ignore .diff files
+*.diff
+
+# ignore config.json file
+config/config.json
 
 # misc
 .DS_Store

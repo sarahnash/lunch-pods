@@ -3,17 +3,23 @@ import User from '../components/User.js'
 import { connect } from 'react-redux'
 import Row from 'react-bootstrap/Row'
 const axios = require('axios')
+const eventdate = '2019-05-01'
 
 class LargeGroupContainer extends Component {
 
   componentDidMount() {
-    axios.get('/api/largegroup')
+    axios.get('/api/largegroup', {
+      params: {
+        eventdate: eventdate
+      }
+    })
       .then(function(response){
-        console.log('users', response)
+        this.props.populateLargeGroup(response) 
+      })
+      .catch(function (error) {
+        console.log(error)
       })
   }
-
-  // TODO: grab results from the large group and pass as props
 
   render() {
     return (
@@ -31,4 +37,8 @@ const mapStateToProps = (state) => ({
   users: state.users
 })
 
-export default connect(mapStateToProps) (LargeGroupContainer);
+const mapDispatchToProps = (dispatch) => ({
+  populateLargeGroup: (response) => dispatch({type: 'POPULATE_LARGEGROUP', users: response})
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) (LargeGroupContainer);

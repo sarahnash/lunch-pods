@@ -1,13 +1,31 @@
 const express = require('express')
 const app = express()
-const db = require('./models/index')
+const db = require('./models/db')
 const port = process.env.PORT || 8000
+const bodyParser = require('body-parser')
 
-// app.use(express.static(_dirname + '/src'))
+// to do add sessions here?
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(express.static(__dirname + '/client/public'))
 
 app.get('/api/largegroup', function(req, res, nextFn){
-  console.log(res.data)
-  res.send()
+  console.log(req.query)
+  db.largegroup.findAll({
+    where: {
+      eventdate: req.query.eventdate
+    }
+  })
+    .then(function(results) {
+      const data = results.map(function (result) {
+        return result.dataValues
+      })
+      res.send(data)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
 })
 
 app.post('/rsvpyes', function(req, res, nextFn){
