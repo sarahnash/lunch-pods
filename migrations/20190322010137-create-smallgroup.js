@@ -8,18 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      eventdate: {
-        type: Sequelize.DATEONLY
-      },
-      userids: {
-        type: Sequelize.STRING
+      largegroupid: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });

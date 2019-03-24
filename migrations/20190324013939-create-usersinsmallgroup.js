@@ -1,17 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('usersinlargegroups', {
+    return queryInterface.createTable('usersinsmallgroups', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userid: {
+      smallgroupid: {
         type: Sequelize.INTEGER
       },
-      largegroupid: {
+      userid: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -23,6 +23,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('usersinlargegroups');
+    return queryInterface.dropTable('usersinsmallgroups');
   }
 };

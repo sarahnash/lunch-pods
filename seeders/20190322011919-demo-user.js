@@ -8,8 +8,6 @@ module.exports = {
         email: '',
         profilelink: 'http://chrisoakman.com/',
         photolink: '../assets/chris-oakman-headshot-medium.jpg',
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         firstName: 'Eli',

@@ -1,8 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const smallgroup = sequelize.define('smallgroup', {
-    eventdate: DataTypes.DATEONLY,
-    userids: DataTypes.STRING
+    largegroupid: DataTypes.INTEGER,
   }, {});
   smallgroup.associate = function(models) {
     // associations can be defined here

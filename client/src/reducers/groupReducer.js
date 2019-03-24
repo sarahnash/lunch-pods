@@ -1,6 +1,7 @@
 const initialState = {
   users: [],
   smallGroups: [],
+  activeEvent: '2019-05-01',
 }
 
 const groupReducer = (state = initialState, action) => {

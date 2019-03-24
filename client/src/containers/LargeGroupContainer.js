@@ -3,14 +3,13 @@ import User from '../components/User.js'
 import { connect } from 'react-redux'
 import Row from 'react-bootstrap/Row'
 const axios = require('axios')
-const eventdate = '2019-05-01'
 
 class LargeGroupContainer extends Component {
 
   componentDidMount() {
     axios.get('/api/largegroup', {
       params: {
-        eventdate: eventdate
+        eventdate: this.state.activeEvent
       }
     })
       .then(function(response){
@@ -34,7 +33,8 @@ class LargeGroupContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.users
+  users: state.users,
+  activeEvent: state.activeEvent
 })
 
 const mapDispatchToProps = (dispatch) => ({

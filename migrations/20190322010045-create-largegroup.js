@@ -11,15 +11,10 @@ module.exports = {
       eventdate: {
         type: Sequelize.DATEONLY
       },
-      userid: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });
