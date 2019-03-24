@@ -15,7 +15,11 @@ app.get('/api/largegroup', function(req, res, nextFn){
   db.largegroup.findAll({
     where: {
       eventdate: req.query.eventdate
-    }
+    },
+    include: [{
+      model: db.user,
+      through: db.usersinlargegroup
+    }]
   })
     .then(function(results) {
       const data = results.map(function (result) {
