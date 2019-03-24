@@ -1,12 +1,22 @@
 const initialState = {
   users: [],
   smallGroups: [],
-  activeEvent: '2019-05-01',
 }
+
+// TODO: working, better way to do mappedusers?
 
 const groupReducer = (state = initialState, action) => {
   console.log(state)
   switch(action.type) {
+    case 'POPULATE_LARGEGROUP':
+    const newusers = state.users.slice()
+    const mappedusers = action.users.map(user => {
+      newusers.push(user)
+    })
+    return {
+      ...state,
+      users: newusers
+    }
     case 'USER_GOING':
     const newUsersGoing = state.users.slice()
     newUsersGoing.push(action.user.user)

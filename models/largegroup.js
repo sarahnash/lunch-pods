@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     eventdate: DataTypes.DATEONLY,
   }, {});
   largegroup.associate = function(models) {
-    // associations can be defined here
+    largegroup.belongsToMany(models.user, { through: 'usersinlargegroup', foreignKey: 'largegroupid' })
   };
   return largegroup;
 };

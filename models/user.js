@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     photolink: DataTypes.STRING
   }, {});
   user.associate = function(models) {
-    // associations can be defined here
+    user.belongsToMany(models.largegroup, { through: 'usersinlargegroup', foreignKey: 'userid' })
   };
   return user;
 };

@@ -11,17 +11,20 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(__dirname + '/client/public'))
 
 app.get('/api/largegroup', function(req, res, nextFn){
-  console.log(req.query)
   db.largegroup.findAll({
     where: {
       eventdate: req.query.eventdate
-    }
+    },
+    include: [{
+      model: db.user,
+      through: db.usersinlargegroup
+    }]
   })
     .then(function(results) {
       const data = results.map(function (result) {
-        return result.dataValues
+        return result.dataValues.users
       })
-      res.send(data)
+      res.send(data[0])
     })
     .catch(function (error) {
       console.log(error)
