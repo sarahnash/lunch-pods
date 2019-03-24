@@ -1,28 +1,30 @@
 const initialState = {
   users: [],
   smallGroups: [],
+  rsvp: false,
 }
 
-// TODO: working, better way to do mappedusers?
+// TODO: working, better way to do mapusers?
 
 const groupReducer = (state = initialState, action) => {
   console.log(state)
   switch(action.type) {
     case 'POPULATE_LARGEGROUP':
     const newusers = state.users.slice()
-    const mappedusers = action.users.map(user => {
+    const mapusers = action.users.map(user => {
       newusers.push(user)
+      return newusers
     })
     return {
       ...state,
       users: newusers
     }
-    case 'USER_GOING':
-    const newUsersGoing = state.users.slice()
-    newUsersGoing.push(action.user.user)
+    // TODO: force largegroup component to re-render
+    case 'UPDATE_LARGEGROUP':
+    const rsvpstatus = action.boolean
     return {
       ...state,
-      users: newUsersGoing
+      rsvp: rsvpstatus
     }
     case 'USER_DECLINE':
     const newUserDeclined = state.users.slice()

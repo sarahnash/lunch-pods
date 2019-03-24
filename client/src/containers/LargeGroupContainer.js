@@ -13,10 +13,7 @@ class LargeGroupContainer extends Component {
       activeEvent: '2019-05-01'
     }
     this.componentDidMount = this.componentDidMount.bind(this)
-    this.createNewUsers = this.createNewUsers.bind(this)
   }
-
-  // bind this to these functions, break out, but how to handle catch error?
 
   componentDidMount() {
     axios.get('/api/largegroup', {
@@ -25,7 +22,6 @@ class LargeGroupContainer extends Component {
       }
     })
       .then(response => {
-        console.log('api/largegroupresponse', response.data)
         this.createNewUsers(response.data)
       })
       .catch(error => {
@@ -33,11 +29,14 @@ class LargeGroupContainer extends Component {
       })
   }
 
+  componentWillReceiveProps(newProps){
+    this.setState({
+        users: newProps.users
+    })
+  }
+
   createNewUsers(newusersarray) {
-    const newusers = newusersarray
-    this.setState({users: newusers})
-    console.log('newcomponentstate', this.state)
-    this.props.populateLargeGroup(this.state.users)
+    this.props.populateLargeGroup(newusersarray)
   }
 
   render() {
@@ -53,7 +52,8 @@ class LargeGroupContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.users
+  users: state.users,
+  rsvp:state.rsvp
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -31,12 +31,19 @@ app.get('/api/largegroup', function(req, res, nextFn){
     })
 })
 
-app.post('/rsvpyes', function(req, res, nextFn){
-  console.log('the app sent an HTTP request to POST /rsvp');
-  res.send('this means the user responded YES to invite')
+app.post('/api/rsvpyes', function(req, res, nextFn){
+  db.usersinlargegroup.create({
+    userid: 19,
+    largegroupid: 2
+  }).then(function(result) {
+    res.send(result)
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
 })
 
-app.delete('/rsvpno', function(req, res, nextFn){
+app.delete('/api/rsvpno', function(req, res, nextFn){
   console.log('the app sent an HTTP request to POST /rsvp');
   res.send('this means the user responded NO to invite')
 })

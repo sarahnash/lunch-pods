@@ -11,42 +11,47 @@ class Event extends Component {
     super(props)
 
     this.state = {
-      user:{
-        photo: '../assets/sarah-headshot.jpg',
-        name: 'Sarah',
-        link: 'http://sarahnash.dev/'
-      },
       yesButton: false,
       noButton: true,
+      rsvpstatus: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  userGoing() {
-    this.props.userGoing(this.state)
-  }
-
-  userDecline() {
-    this.props.userDecline(this.state)
   }
 
   handleSubmit(event, type) {
     event.preventDefault()
     if (type === true) {
-      this.userGoing()
       this.setState({yesButton: true, noButton: false})
-      axios.post('/rsvpyes')
-        .then(function(response){
+      axios.post('/api/rsvpyes', {
+      })
+        .then(response => {
           console.log(response)
+          this.updateRSVPstatus()
+        })
+        .catch(error => {
+          console.log(error)
         })
     } else if (type === false) {
-      this.userDecline()
       this.setState({noButton: true, yesButton: false})
-      axios.delete('/rsvpno')
-      .then(function(response){
-        console.log(response)
-      })
+      // axios.delete('/api/rsvpno', {
+      //   params: {
+      //     user: this.state.user
+      //   }
+      // })
+      // .then(response => {
+      //   console.log(response)
+      //   // pop up a confirmation somewhere
+      // })
+      // .catch(error => {
+      //   console.log(error)
+      // })
+      // this.userDecline()
     }
+  }
+
+  updateRSVPstatus() {
+    this.setState({ rsvpstatus: true })
+    this.props.updateLargeGroup(this.state.rsvpstatus)
   }
 
   render() {
@@ -75,12 +80,12 @@ class Event extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.users
+  users: state.users,
+  rsvp: state.rsvp
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  userGoing: (user) => dispatch({type: 'USER_GOING', user: user}),
-  userDecline: (user) => dispatch({type: 'USER_DECLINE', user: user})
+  updateLargeGroup: (boolean) => dispatch({type: 'UPDATE_LARGEGROUP', boolean: boolean})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (Event);
