@@ -5,6 +5,18 @@ import Row from 'react-bootstrap/Row'
 const axios = require('axios')
 
 class LargeGroupContainer extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      users: [],
+      activeEvent: '2019-05-01'
+    }
+    this.componentDidMount = this.componentDidMount.bind(this)
+    this.createNewUsers = this.createNewUsers.bind(this)
+  }
+
+  // bind this to these functions, break out, but how to handle catch error?
 
   componentDidMount() {
     axios.get('/api/largegroup', {
@@ -12,12 +24,20 @@ class LargeGroupContainer extends Component {
         eventdate: this.state.activeEvent
       }
     })
-      .then(function(response){
-        this.props.populateLargeGroup(response) 
+      .then(response => {
+        console.log('api/largegroupresponse', response.data)
+        this.createNewUsers(response.data)
       })
-      .catch(function (error) {
+      .catch(error => {
         console.log(error)
       })
+  }
+
+  createNewUsers(newusersarray) {
+    const newusers = newusersarray
+    this.setState({users: newusers})
+    console.log('newcomponentstate', this.state)
+    this.props.populateLargeGroup(this.state.users)
   }
 
   render() {
@@ -33,12 +53,11 @@ class LargeGroupContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.users,
-  activeEvent: state.activeEvent
+  users: state.users
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  populateLargeGroup: (response) => dispatch({type: 'POPULATE_LARGEGROUP', users: response})
+  populateLargeGroup: (users) => dispatch({type: 'POPULATE_LARGEGROUP', users: users})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (LargeGroupContainer);
