@@ -44,8 +44,17 @@ app.post('/api/rsvpyes', function(req, res, nextFn){
 })
 
 app.delete('/api/rsvpno', function(req, res, nextFn){
-  console.log('the app sent an HTTP request to POST /rsvp');
-  res.send('this means the user responded NO to invite')
+  db.usersinlargegroup.destroy({
+    where: {
+      userid: 19,
+      largegroupid: 2
+    }
+  }).then(function(result) {
+    res.send(result)
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
 })
 
 app.post('/creategroups', function(req, res, nextFn){

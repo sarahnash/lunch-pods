@@ -33,24 +33,25 @@ class Event extends Component {
         })
     } else if (type === false) {
       this.setState({noButton: true, yesButton: false})
-      // axios.delete('/api/rsvpno', {
-      //   params: {
-      //     user: this.state.user
-      //   }
-      // })
-      // .then(response => {
-      //   console.log(response)
-      //   // pop up a confirmation somewhere
-      // })
-      // .catch(error => {
-      //   console.log(error)
-      // })
-      // this.userDecline()
+      axios.delete('/api/rsvpno', {
+      })
+      .then(response => {
+        console.log(response)
+        this.resetRSVPstatus()
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 
   updateRSVPstatus() {
     this.setState({ rsvpstatus: true })
+    this.props.updateLargeGroup(this.state.rsvpstatus)
+  }
+
+  resetRSVPstatus() {
+    this.setState({ rsvpstatus: false })
     this.props.updateLargeGroup(this.state.rsvpstatus)
   }
 
@@ -85,7 +86,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateLargeGroup: (boolean) => dispatch({type: 'UPDATE_LARGEGROUP', boolean: boolean})
+  updateLargeGroup: (boolean) => dispatch({type: 'UPDATE_LARGEGROUP', boolean: boolean}),
+  populateLargeGroup: () => dispatch({ type: 'POPULATE_LARGEGROUP' })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (Event);

@@ -19,12 +19,10 @@ const groupReducer = (state = initialState, action) => {
       ...state,
       users: newusers
     }
-    // TODO: force largegroup component to re-render
     case 'UPDATE_LARGEGROUP':
-    const rsvpstatus = action.boolean
     return {
       ...state,
-      rsvp: rsvpstatus
+      rsvp: !state.rsvp
     }
     case 'USER_DECLINE':
     const newUserDeclined = state.users.slice()
